@@ -7,6 +7,8 @@ class Gioco {
         Scanner scanner = new Scanner(System.in);
         Tabellone tabellone = new Tabellone();
         ArrayList<Giocatore> giocatori = new ArrayList<>();
+        Banca banca = new Banca(10000);
+        Terreno terreno = new Terreno("Terreno Esempio", 1, 100, 10);
 
         Turni turni = new Turni(giocatori);
         int numeroGiocatori = 0;
@@ -24,23 +26,16 @@ class Gioco {
             System.out.println("Inserisci il nome del giocatore " + (i + 1) + ":");
             String nomeGiocatore = scanner.next();
 
-            Giocatore giocatore = new Giocatore(nomeGiocatore, 0, 0, 1500, new ArrayList<Terreno>(), true);
+            Giocatore giocatore = new Giocatore(nomeGiocatore, 0, 1500, new ArrayList<>(), true);
             giocatori.add(giocatore);
             System.out.println("Giocatore " + giocatore.getNome() + " creato con saldo iniziale di " + giocatore.getSaldo());
         }
 
+        Giocatore bob = new Giocatore("Bob", 0, 1500, new ArrayList<>(), false);
+
         tabellone.stampaTabellone();
-
-        while (true) {
-            Giocatore corrente = turni.getGiocatoreCorrente();
-            System.out.println("Turno di " + corrente.getNome());
-
-            //movimento
-            Casella casella = tabellone.getCasella(corrente.getX(), corrente.getY());
-            System.out.println("Sei arrivato su: " + casella.getNome());
-
-            turni.passaAlProssimoTurno();
-        }
+        terreno.compraCasa(bob, banca);
+        tabellone.stampaTabellone();
 
     }
 }

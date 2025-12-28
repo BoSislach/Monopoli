@@ -1,11 +1,11 @@
+import java.util.Random;
 class Tabellone {
     protected int dimensione;
     protected char[][] monopoli;
-    protected final int DIM = 11;
+    protected final int DIM = 10;
     protected Casella[][] matrice = new Casella[DIM][DIM];
-
     public Tabellone(){
-        dimensione = 11;
+        dimensione = 10;
         monopoli = new char[dimensione][dimensione];
         inizializzaTabellone();
     }
@@ -35,14 +35,40 @@ class Tabellone {
     }
 
     private Casella creaCasella(int pos, int x, int y) {
+        Random rand = new Random();
+        Random rand2 = new Random();
         switch (pos) {
             case 0:
-                return new Partenza();
+                return new Partenza("partenza", pos);
+            case 5:
+                return new Tassa(25,"tassa",pos);
             case 10:
-                return new Prigione(x, y, "Prigione");
+                return new Prigione("Prigione",pos);
+            case 15:
+                return new Imprevisto("imprevisto",pos);
+            case 20:
+                return new Tassa(50, "tassa",pos);
+            case 25:
+                return new Imprevisto("imprevisto",pos);
+            case 30:
+                return new VaiinPrigione("VaiPrig",pos);
+            case 35: 
+                return new Tassa(50, "tassa  ",pos);
+            case 40:
+                return new Imprevisto("imprevisto",pos);
             default:
-                return new Terreno(null, pos, pos, x, y);
+                int costo = rand.nextInt(25, 100);
+                int affitto = rand2.nextInt(15, 50);
+                return new Terreno("terreno", pos, costo, affitto);
         }
+    }
+
+    public int getMatriceLength() {
+        return matrice.length;
+    }
+
+    public int getMatriceWidth() {
+        return matrice[0].length;
     }
     
     public Casella getCasella(int x, int y) {
@@ -65,14 +91,12 @@ class Tabellone {
         for (int i = 0; i < DIM; i++) {
             for (int j = 0; j < DIM; j++) {
                 if (matrice[i][j] != null) {
-                    String nome = matrice[i][j].getNome();
-                    System.out.print(String.format("[%8s] ", nome));
+                    System.out.print("[" + matrice[i][j].toString() + "         ]");
                 } else {
-                    System.out.print("[          ] ");
+                    System.out.print("[          ]");
                 }
             }
             System.out.println();
         }
     }
-
 }
