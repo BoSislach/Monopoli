@@ -1,8 +1,8 @@
 import java.util.Random;
 public class Imprevisto extends Casella{
 
-    public Imprevisto(String nomeCasella,int x,int y){
-        super(nomeCasella,x,y);
+    public Imprevisto(String nomeCasella,int posizione){
+        super(nomeCasella, posizione);
     }
 
     public enum AzioneImprevisto{
@@ -32,7 +32,7 @@ public class Imprevisto extends Casella{
         @Override
         public void eseguiAzione(Giocatore giocatore, Tabellone t, Dadi dadi){
             //aggiunta controllo se sei ai bordi DANIEL SOS!!!!!!?
-            giocatore.setPosizione(giocatore.getX()+5, giocatore.getY());
+            giocatore.setPosizione(giocatore.getPosizione() + 5);
         }
     },
     Paga_tassa_imprevisto100("paga una tassa imprevisto di 100 $"){
@@ -68,7 +68,7 @@ public class Imprevisto extends Casella{
     VaiAllaPartenza("vai alla partenza"){
         @Override
         public void eseguiAzione(Giocatore giocatore, Tabellone t, Dadi dadi){
-            giocatore.setPosizione(0,0);
+            giocatore.setPosizione(0);
             giocatore.setSaldo(giocatore.getSaldo() + 200);
         }
     },
@@ -77,7 +77,7 @@ public class Imprevisto extends Casella{
         @Override
         public void eseguiAzione(Giocatore giocatore, Tabellone t,Dadi dadi){
             //FUNZIOE DELLO SPOSTAMENTO INDIETRO DANIEL SOS!!!!!!!
-            giocatore.setPosizione(giocatore.getX(), giocatore.getY() - 3);
+            giocatore.setPosizione(giocatore.getPosizione() - 3);
         }
     },
     ManutenzioneCasa25("paga una manutenzione di 25 $ per ogni casa posseduta"){
@@ -114,7 +114,7 @@ public class Imprevisto extends Casella{
     Avanza1Posizioni("avanza di 1 posizioni"){
         @Override
         public void eseguiAzione(Giocatore giocatore, Tabellone t,Dadi dadi){
-            giocatore.setPosizione(giocatore.getX()+1, giocatore.getY());
+            giocatore.setPosizione(giocatore.getPosizione() + 1);
         }
     },
 

@@ -4,19 +4,10 @@ class Prigione extends Casella{
     protected final int TurniPrigione = 3;
     protected final int CostoCauzione = 50;
     protected int contatorePosizioneGiocatore=0;
-    protected int x;
-    protected int y;
+    protected int posizione;
 
-    public Prigione(int x, int y, String nome){
-        super(nome, x, y);
-    }
-
-    public int getX(){
-        return x;
-    }
-
-    public int getY(){
-        return y;
+    public Prigione(String nome, int posizione){
+        super(nome, posizione);
     }
 
     public boolean getIndicatorePrigione(){

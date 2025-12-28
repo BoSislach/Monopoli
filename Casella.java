@@ -1,75 +1,63 @@
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+enum Colore {
+    ROSSO("\u001B[41m"),
+    BLU("\u001B[44m"),
+    VERDE("\u001B[42m"),
+    GIALLO("\u001B[43m"),
+    BIANCO("\u001B[47m");
+
+    public static final String RESET = "\u001B[0m";
+    public final String ansi;
+
+    Colore(String ansi) {
+        this.ansi = ansi;
+    }
+}
+
 class Casella {
     protected String nome;
     protected Casella precedente;
     protected Casella successiva;
-    protected int x;
-    protected int y;
-    protected Color color;
+    protected int posizione;
+    protected Colore colore;
 
-    protected final Color coloreBase = Color.LIGHT_GRAY;
+    protected final Colore coloreBase = Colore.BIANCO;
 
-    public Casella(String nome,int x,int y) {
-        this.nome = nome;
-        this.x = x;
-        this.y = y;
-        this.color = coloreBase;
-
-    }
-
-    protected Color[] vettoreColori = {
-            Color.RED,
-            Color.BLUE,
-            Color.GREEN,
-            Color.YELLOW
+    protected Colore[] vettoreColori = {
+            Colore.ROSSO,
+            Colore.BLU,
+            Colore.VERDE,
+            Colore.GIALLO
     };
-    protected ArrayList<Color> colori = new ArrayList<>(Arrays.asList(vettoreColori));
-    
 
-    Color white = Color.WHITE; //colore base
+    protected ArrayList<Colore> colori = new ArrayList<>(Arrays.asList(vettoreColori));
+
+    public Casella(String nome, int posizione) {
+        this.nome = nome;
+        this.posizione = posizione;
+        this.colore = coloreBase;
+    }
 
     public String getNome() {
         return nome;
     }
 
-    public Color getColor() {
-        return color;
+    public int getPosizione() {
+        return posizione;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public Colore getColore() {
+        return colore;
+    }
+    public void setColore(int posizione) {
+        this.colore = colori.get(posizione);
     }
     
-    public int getX(){
-        return x;
-    }
-
-    public int getY(){
-        return y;
-    }
 
     @Override
     public String toString() {
-        String coloreANSI = "";
-        String reset = "\u001B[0m";
-
-        if(getColor().equals(Color.RED)){
-            coloreANSI = "\u001B[41m";
-
-        } else if(getColor().equals(Color.BLUE)){
-            coloreANSI = "\u001B[44m";
-
-        } else if(getColor().equals(Color.GREEN)){
-            coloreANSI = "\u001B[42m";
-
-        } else if(getColor().equals(Color.YELLOW)){
-            coloreANSI = "\u001B[43m";
-
-        } else{
-            coloreANSI = "\u001B[47m";
-        }
-        return coloreANSI + " " + nome + " " + reset;
+        return colore.ansi + " " + nome + " " + Colore.RESET;
     }
 }
