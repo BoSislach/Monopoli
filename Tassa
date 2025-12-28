@@ -1,8 +1,8 @@
 class Tassa extends Casella {
     private int importo;
 
-    public Tassa(int importo, String nome, int x, int y) {
-        super(nome, x, y);
+    public Tassa(int importo, String nome ,int posizione) {
+        super(nome,posizione);
         this.importo = importo;
     }
 
@@ -23,6 +23,8 @@ class Tassa extends Casella {
         // devo aggiungere aggiungi soldi alla banca
         System.out.println(g.getNome() + " paga una tassa di " + importo + "$");
     }
-}
 
+    public String toString() {
+        return super.toString() + " [Tassa: " + importo + "$]";
+    }
 }
