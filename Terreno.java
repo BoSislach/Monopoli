@@ -74,8 +74,7 @@ class Terreno extends Casella {
 
     @Override
     public String toString() {
-        return super.toString()
-                + "Costo: " + costo
+        return  "Costo: " + costo
                 + "Affitto: " + affitto
                 + "Case costruite: " + numeroCaseInCasella;
 

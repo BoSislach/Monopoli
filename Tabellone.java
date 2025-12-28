@@ -39,23 +39,23 @@ class Tabellone {
         Random rand2 = new Random();
         switch (pos) {
             case 0:
-                return new Partenza("partenza", pos);
+                return new Partenza("PARTENZA", pos);
             case 5:
-                return new Tassa(25,"tassa",pos);
+                return new Tassa(25,"TASSA",pos);
             case 10:
-                return new Prigione("Prigione",pos);
+                return new Prigione("PRIGIONE",pos);
             case 15:
-                return new Imprevisto("imprevisto",pos);
+                return new Imprevisto("IMPREVISTO",pos);
             case 20:
-                return new Tassa(50, "tassa",pos);
+                return new Tassa(50, "TASSA",pos);
             case 25:
-                return new Imprevisto("imprevisto",pos);
+                return new Imprevisto("IMPREVISTO",pos);
             case 30:
-                return new VaiinPrigione("VaiPrig",pos);
+                return new VaiinPrigione("VAIPRIGIONE",pos);
             case 35: 
-                return new Tassa(50, "tassa  ",pos);
+                return new Tassa(50, "TASSA  ",pos);
             case 40:
-                return new Imprevisto("imprevisto",pos);
+                return new Imprevisto("IMPREVISTO",pos);
             default:
                 int costo = rand.nextInt(25, 100);
                 int affitto = rand2.nextInt(15, 50);
@@ -88,15 +88,40 @@ class Tabellone {
     }
 
     public void stampaTabellone() {
+        int larghezza = 10;
         for (int i = 0; i < DIM; i++) {
             for (int j = 0; j < DIM; j++) {
                 if (matrice[i][j] != null) {
-                    System.out.print("[" + matrice[i][j].toString() + "         ]");
+                    String nome = matrice[i][j].getNome();
+
+                    String colore = matrice[i][j].getColore().ansi;
+                    String reset = "\u001B[0m";
+
+                    if(matrice[i][j] instanceof Terreno){
+                        System.out.print("[" + centra(nome, larghezza) + "]");
+                    }else{
+                        System.out.print("[" + colore + centra(nome, larghezza) + reset + "]");
+                    }
+                    
                 } else {
-                    System.out.print("[          ]");
+                    System.out.print("[" + " ".repeat(larghezza) + "]");
                 }
             }
             System.out.println();
         }
+}
+
+private String centra(String testo, int larghezza) {
+    if (testo.length() >= larghezza) {
+        return testo.substring(0, larghezza);
     }
+
+    int spaziTotali = larghezza - testo.length();
+    int spaziSinistra = spaziTotali / 2;
+    int spaziDestra = spaziTotali - spaziSinistra;
+
+    return " ".repeat(spaziSinistra) + testo + " ".repeat(spaziDestra);
+}
+
+
 }

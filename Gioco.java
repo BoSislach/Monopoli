@@ -35,6 +35,7 @@ class Gioco {
 
         tabellone.stampaTabellone();
         terreno.compraCasa(bob, banca);
+        
         tabellone.stampaTabellone();
 
     }
