@@ -31,20 +31,8 @@ class Banca {
             return false;
         }
 
-         if (giocatore.getSaldo() < terreno.getCosto()) {
-            System.out.println("Saldo insufficiente per acquistare il terreno.");
-            return false;
-        }
-
-        // se tutto va bene -> faccio la transazione
-        giocatore.setSaldo(giocatore.getSaldo() - terreno.getCosto());
-        aggiungiSaldoBanca(terreno.getCosto());
-
         // ho comprato il terreno
         terreno.setComprato();
-
-        // il terreno va in mano al giocatore che lo ha comprato
-        giocatore.acquistaTerreno(terreno, 0);
 
         System.out.println(giocatore.getNome() + " ha acquistato il terreno " + terreno.getNome());
         return true;
