@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 class Tabellone {
     protected int dimensione;
@@ -10,7 +11,7 @@ class Tabellone {
         inizializzaTabellone();
     }
     
-    private void inizializzaTabellone() {
+    protected void inizializzaTabellone() {
         int pos = 0;
 
         for (int j = 0; j < DIM; j++) {
@@ -87,29 +88,39 @@ class Tabellone {
         return null; 
     }
 
-    public void stampaTabellone() {
-        int larghezza = 10;
-        for (int i = 0; i < DIM; i++) {
-            for (int j = 0; j < DIM; j++) {
-                if (matrice[i][j] != null) {
-                    String nome = matrice[i][j].getNome();
-
-                    String colore = matrice[i][j].getColore().ansi;
-                    String reset = "\u001B[0m";
-
-                    if(matrice[i][j] instanceof Terreno){
-                        System.out.print("[" + centra(nome, larghezza) + "]");
-                    }else{
-                        System.out.print("[" + colore + centra(nome, larghezza) + reset + "]");
+    public void stampaTabellone(ArrayList<Giocatore> giocatori) {
+    int larghezza = 10;
+    for (int i = 0; i < DIM; i++) {
+        for (int j = 0; j < DIM; j++) {
+            if (matrice[i][j] != null) {
+                String nomeCasella = centra(matrice[i][j].getNome(), larghezza);
+                Colore colore = matrice[i][j].getColore();
+                String simboliGiocatori = "";
+                for (int c =0 ;c < giocatori.size();c++) {
+                    if (giocatori.get(c).getPosizione() == matrice[i][j].getPosizione()) {
+                        simboliGiocatori += giocatori.get(c).getSimbolo();
                     }
-                    
-                } else {
-                    System.out.print("[" + " ".repeat(larghezza) + "]");
                 }
+                if (!simboliGiocatori.equals("")) {
+                    System.out.print("[" + centra(simboliGiocatori, larghezza) + "]");
+                } else {
+                    if (matrice[i][j] instanceof Terreno && colore != null) {
+                        System.out.print("[" + colore.ansi + nomeCasella + Colore.RESET + "]");
+                    } else if (!(matrice[i][j] instanceof Terreno)) {
+                        System.out.print("[" + Colore.BIANCO.ansi + nomeCasella + Colore.RESET + "]");
+                    } else {
+                        System.out.print("[" + nomeCasella + "]");
+                    }
+                }
+            } else {
+                System.out.print("[" + " ".repeat(larghezza) + "]");
             }
-            System.out.println();
         }
+        System.out.println();
+    }
 }
+
+
 
 private String centra(String testo, int larghezza) {
     if (testo.length() >= larghezza) {

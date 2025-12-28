@@ -15,14 +15,16 @@ class Giocatore {
     protected boolean saltaTasse = false;
     protected int contatoreSaltaTasse = 3;
     protected boolean VaiInPrigione = false;
+    protected String simbolo;
 
     public Giocatore(String nome, int posizione, int saldo,
-                     ArrayList<Terreno> terreniPosseduti, boolean inGioco) {
+                     ArrayList<Terreno> terreniPosseduti, boolean inGioco, String simbolo) {
         this.nome = nome;
         this.posizione = posizione;
         this.saldo = saldo;
         this.terreniPosseduti = terreniPosseduti;
         this.inGioco = inGioco;
+        this.simbolo = simbolo;
     }
 
     public String getNome() {
@@ -51,6 +53,10 @@ class Giocatore {
 
     public void aumementaCounterTurni() {
         this.counterTurni++;
+    }
+
+    public String getSimbolo(){
+        return simbolo;
     }
 
     public boolean controlloPerditaTurno() {

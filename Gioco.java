@@ -8,7 +8,6 @@ class Gioco {
         Tabellone tabellone = new Tabellone();
         ArrayList<Giocatore> giocatori = new ArrayList<>();
         Banca banca = new Banca(10000);
-        Terreno terreno = new Terreno("Terreno Esempio", 1, 100, 10);
 
         Turni turni = new Turni(giocatori);
         int numeroGiocatori = 0;
@@ -25,18 +24,24 @@ class Gioco {
         for (int i = 0; i < numeroGiocatori; i++) {
             System.out.println("Inserisci il nome del giocatore " + (i + 1) + ":");
             String nomeGiocatore = scanner.next();
-
-            Giocatore giocatore = new Giocatore(nomeGiocatore, 0, 1500, new ArrayList<>(), true);
+            System.out.println("inserisci carattere speciale");
+            Giocatore giocatore = new Giocatore(nomeGiocatore, 0, 1500, new ArrayList<>(), true,scanner.next());
             giocatori.add(giocatore);
             System.out.println("Giocatore " + giocatore.getNome() + " creato con saldo iniziale di " + giocatore.getSaldo());
         }
-
-        Giocatore bob = new Giocatore("Bob", 0, 1500, new ArrayList<>(), false);
-
-        tabellone.stampaTabellone();
-        terreno.compraCasa(bob, banca);
         
-        tabellone.stampaTabellone();
+
+        tabellone.inizializzaTabellone();
+
+        tabellone.stampaTabellone(giocatori);
+
+        Casella c = tabellone.getCasella(0, 1);
+        
+        Terreno t = (Terreno) c;
+
+        //t.compraCasa(bob, banca);
+        
+        //tabellone.stampaTabellone(giocatori);
 
     }
 }

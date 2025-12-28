@@ -23,7 +23,7 @@ class Casella {
     protected int posizione;
     protected Colore colore;
 
-    protected final Colore coloreBase = Colore.BIANCO;
+    protected final Colore coloreBase = null;
 
     protected Colore[] vettoreColori = {
             Colore.ROSSO,
@@ -58,6 +58,15 @@ class Casella {
 
     @Override
     public String toString() {
-        return colore.ansi + " " + nome + " " + Colore.RESET;
+        if(colore == null){
+            if(this instanceof Terreno){
+                return nome; 
+            }else{
+                return Colore.BIANCO.ansi + nome + Colore.RESET;
+            }
+        }else{
+             return colore.ansi + " " + nome + " " + Colore.RESET;
+        }
+       
     }
 }

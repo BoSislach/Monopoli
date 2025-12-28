@@ -74,9 +74,7 @@ class Terreno extends Casella {
 
     @Override
     public String toString() {
-        return  "Costo: " + costo
-                + "Affitto: " + affitto
-                + "Case costruite: " + numeroCaseInCasella;
+        return  colore.ansi + nome + Colore.RESET;
 
     }
 
