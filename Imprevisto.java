@@ -3,7 +3,16 @@ public class Imprevisto extends Casella{
 
     public Imprevisto(String nomeCasella,int posizione){
         super(nomeCasella, posizione);
+
+
+        
     }
+    public void esegui(Giocatore giocatore, Tabellone t, Dadi dadi) {
+    AzioneImprevisto azione = getAzioneCasuale();
+    System.out.println(azione.getDescrizioneAzione());
+    azione.eseguiAzione(giocatore, t, dadi);
+}
+
 
     public enum AzioneImprevisto{
 
@@ -32,6 +41,10 @@ public class Imprevisto extends Casella{
         @Override
         public void eseguiAzione(Giocatore giocatore, Tabellone t, Dadi dadi){
             //aggiunta controllo se sei ai bordi DANIEL SOS!!!!!!?
+            if (giocatore.getPosizione() + 5 > 39) {
+                giocatore.setPosizione((giocatore.getPosizione() + 5) - 40);
+                giocatore.setSaldo(giocatore.getSaldo() + 200);
+            }
             giocatore.setPosizione(giocatore.getPosizione() + 5);
         }
     },
