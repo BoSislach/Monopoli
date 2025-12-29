@@ -1,4 +1,4 @@
-class Banca {
+public class Banca {
     protected int saldoTotale;
     
     public Banca(int saldoIniziale) {
