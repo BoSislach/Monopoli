@@ -2,8 +2,6 @@ public class Prigione extends Casella{
     protected boolean contatorePrigione = false;
     protected final int TurniPrigione = 3;
     protected final int CostoCauzione = 50;
-    protected int contatorePosizioneGiocatore=0;
-    protected int posizione;
 
     public Prigione(String nome, int posizione){
         super(nome, posizione);
@@ -19,19 +17,6 @@ public class Prigione extends Casella{
 
     public boolean getContatorePrigione(){
         return contatorePrigione;
-    }
-
-
-    public boolean contaVoltePosizioneGiocatore(Giocatore g){
-        contatorePosizioneGiocatore++;
-        if(contatorePosizioneGiocatore >= TurniPrigione){
-          contatorePosizioneGiocatore=0;
-          g.setStatoPrigione(false);
-          return false;
-        }else{
-          g.setStatoPrigione(true);
-          return true;
-        }
     }
 
     public boolean cauzione(Giocatore g){

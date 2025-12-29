@@ -50,7 +50,6 @@ public class Gioco {
                     System.out.println(giocatoreCorrente.getNome() + " vuoi usare la carta imprevisto? (s/n)");
                     String risposta = scanner.next();
                     if(risposta.equals("s")){
-                        giocatoreCorrente.esciPrigione();
                         giocatoreCorrente.usaCartaPrigione();
                         System.out.println(giocatoreCorrente.getNome()+ " ha usato la carta esci di prigione");
                     }else{
@@ -59,9 +58,12 @@ public class Gioco {
                         
                     
                 }else{
-                    boolean saltaTurno = prigione.contaVoltePosizioneGiocatore(giocatoreCorrente);
-                    if(saltaTurno){
-                        System.out.println("il giocatore " + giocatoreCorrente.getNome()+ " salta il turno perche e in prigione");
+                    giocatoreCorrente.turniInPrigione--;
+                    if(giocatoreCorrente.turniInPrigione <=0){
+                        giocatoreCorrente.setStatoPrigione(false);
+                        System.out.println(giocatoreCorrente.getNome() + " esce dalla prigione");
+                    }else{
+                        System.out.println(giocatoreCorrente.getNome() + " rimane in prigione per altri " + giocatoreCorrente.turniInPrigione + " turni");
                         turni.passaAlProssimoTurno();
                         continue;
                     }
@@ -72,7 +74,12 @@ public class Gioco {
             dadi.lanciaDadi();
             int somma = dadi.getSomma();
             System.out.println(giocatoreCorrente.getNome() + " ha lanciato i dadi e ottenuto: " + somma);
+            scanner.nextLine();
+            System.out.println("premi un tasto per continuare");
+            scanner.nextLine();
+
             giocatoreCorrente.setPosizione(giocatoreCorrente.getPosizione() + somma);
+            tabellone.stampaTabellone(giocatori);
 
             if(giocatoreCorrente.getPosizione() >= 40){
                 System.out.println(giocatoreCorrente.getNome() + " ha superato la partenza e riceve 200$");
@@ -82,18 +89,25 @@ public class Gioco {
 
             Casella casellaCorrente = tabellone.getCasella(giocatoreCorrente.getPosizione());
             System.out.println(giocatoreCorrente.getNome() + " è atterrato su " + casellaCorrente.getNome());
+            Prigione prigioneAtterrato = tabellone.getCasellaPrigione();
+
+            if(casellaCorrente.equals(prigioneAtterrato)){
+                giocatoreCorrente.setStatoPrigione(true);
+                giocatoreCorrente.turniInPrigione = prigioneAtterrato.getTurniPrigione();
+            }
             if(casellaCorrente instanceof Terreno terreno) {
                 if(terreno.getProprietario() == null) {
+                    
                     if(giocatoreCorrente.getSaldo() >= terreno.getCosto()) {
                         System.out.println("Vuoi acquistare " + terreno.getNome() + " per " + terreno.getCosto() + "? (s/n)");
                         String risposta = scanner.next();
+
                         if(risposta.equals("s")) {
                             giocatoreCorrente.setSaldo(giocatoreCorrente.getSaldo() - terreno.getCosto());
                             
                             ((Terreno) casellaCorrente).compraCasa(giocatoreCorrente, banca);
 
                             terreno.setProprietario(giocatoreCorrente);
-                            giocatoreCorrente.getTerreniPosseduti().add(terreno);
                             System.out.println(giocatoreCorrente.getNome() + " ha acquistato " + terreno.getNome());
                         }
                     } else {
@@ -110,7 +124,6 @@ public class Gioco {
                 imprevisto.esegui(giocatoreCorrente,tabellone,dadi);
 
             }else if(casellaCorrente instanceof VaiinPrigione) {
-                System.out.println(giocatoreCorrente.getNome() + " e nella casella Vai in Prigione");
                 boolean controlloPrigione = ((VaiinPrigione) casellaCorrente).VaiInGalera(giocatoreCorrente);
                 if(controlloPrigione){
                     System.out.println("vuoi pagare la cauzione? (s/n)" );
@@ -126,10 +139,6 @@ public class Gioco {
 
 
                 
-
-
-
-                
             }else if(casellaCorrente instanceof Tassa) {
                 Tassa tassa = (Tassa) casellaCorrente;
                 System.out.println(giocatoreCorrente.getNome() + " deve pagare una tassa di " + tassa.getImporto());
@@ -139,17 +148,15 @@ public class Gioco {
                 }else{
                     giocatoreCorrente.setSaldo(giocatoreCorrente.getSaldo() - tassa.getImporto());
             }
-            turni.passaAlProssimoTurno();
             
-            }else if(casellaCorrente instanceof Partenza){
-                Partenza partenza = (Partenza) casellaCorrente;
-
-                partenza.PassaAlVia(giocatoreCorrente);
-                
             }
 
             
         }
+        System.out.println("premi un tasto per continuare");
+        scanner.nextLine();
+        scanner.nextLine();
+        turni.passaAlProssimoTurno();
         }
     }
 }

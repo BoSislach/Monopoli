@@ -50,32 +50,42 @@ public class Terreno extends Casella {
         System.out.println(giocatore.getNome() + " ha pagato un affitto di " + affitto);
     }
 
+
     public boolean compraCasa(Giocatore giocatore, Banca banca) {
-    if (numeroCaseInCasella < Max_Case && giocatore.getSaldo() >= costo) {
+        int posizione;
+    if (numeroCaseInCasella <= Max_Case) {
         banca.vendiTerreno(this, giocatore);
         giocatore.setSaldo(giocatore.getSaldo() - costo);
+        if(!giocatore.getHaComprato()){
         System.out.println("scegli un colore per la casa tra i seguenti:");
 
-        for (int i = 0; i < vettoreColori.length; i++) {
+        for (int i = 0; i < colori.size(); i++) {
             System.out.println(i + ": " + colori.get(i));
         }
 
+        do{
         System.out.print("Scegli un colore: ");
-        int posizione = scanner.nextInt();
-        setColore(posizione); 
+        posizione = scanner.nextInt();
+        }while(posizione < 0 || posizione > colori.size()-1);
+        giocatore.setColoreScelto(colori.get(posizione));
+        setColore(colori.get(posizione)); 
         numeroCaseInCasella++;
-
+        giocatore.setHaComprato(true);
         giocatore.terreniPosseduti.add(this);
         colori.remove(posizione);
-
         return true;
+    }else{
+        setColore(giocatore.getColoreScelto());
+        numeroCaseInCasella++;
+        giocatore.terreniPosseduti.add(this);
+        return true;
+
+    }
     } else {
-        if (numeroCaseInCasella >= Max_Case) {
-            System.out.println("Non puoi comprare altre case su questo terreno.");
-        } else {
-            System.out.println("Saldo insufficiente per comprare una casa.");
-        }
+        System.out.println("Non puoi comprare altre case su questo terreno.");
         return false;
+        
+        
     }
 }
 

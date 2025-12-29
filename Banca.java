@@ -34,7 +34,6 @@ public class Banca {
         // ho comprato il terreno
         terreno.setComprato();
 
-        System.out.println(giocatore.getNome() + " ha acquistato il terreno " + terreno.getNome());
         return true;
     }
 

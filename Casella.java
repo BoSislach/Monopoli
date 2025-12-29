@@ -25,14 +25,7 @@ public class Casella {
 
     protected final Colore coloreBase = null;
 
-    protected Colore[] vettoreColori = {
-            Colore.ROSSO,
-            Colore.BLU,
-            Colore.VERDE,
-            Colore.GIALLO
-    };
-
-    protected ArrayList<Colore> colori = new ArrayList<>(Arrays.asList(vettoreColori));
+    public static ArrayList<Colore> colori = new ArrayList<>(Arrays.asList(Colore.ROSSO, Colore.BLU,Colore.VERDE,Colore.GIALLO));
 
     public Casella(String nome, int posizione) {
         this.nome = nome;
@@ -51,8 +44,8 @@ public class Casella {
     public Colore getColore() {
         return colore;
     }
-    public void setColore(int posizione) {
-        this.colore = colori.get(posizione);
+    public void setColore(Colore color) {
+        this.colore = color;
     }
     
 

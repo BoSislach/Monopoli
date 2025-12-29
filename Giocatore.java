@@ -16,7 +16,10 @@ public class Giocatore {
     protected int contatoreSaltaTasse = 3;
     protected boolean VaiInPrigione = false;
     protected String simbolo;
-    
+    protected boolean Hacomprato = false;
+    protected Colore coloreScelto = null;
+    protected int turniInPrigione = 0;
+
 
     public Giocatore(String nome, int posizione, int saldo, ArrayList<Terreno> terreniPosseduti, boolean inGioco, String simbolo) {
         this.nome = nome;
@@ -86,6 +89,14 @@ public class Giocatore {
         }
     }
 
+    public void setHaComprato(boolean stato){
+        this.Hacomprato = stato;
+    }
+
+    public boolean getHaComprato(){
+        return Hacomprato;
+    }
+
     public ArrayList<Terreno> getTerreniPosseduti() {
         return terreniPosseduti;
     }
@@ -95,6 +106,16 @@ public class Giocatore {
             System.out.println(t.getNome());
         }
     }
+
+    public void setColoreScelto(Colore posizione){
+        coloreScelto = posizione;
+    }
+
+    public Colore getColoreScelto(){
+        return coloreScelto;
+    }
+
+
 
     public void pagaAffitto(Terreno terreno) {
         int affitto = terreno.getAffitto();
@@ -114,7 +135,7 @@ public class Giocatore {
     }
 
     public void setCartaPrigione() {
-        this.cartaEsciPrigione = true;
+        this.cartaEsciPrigione = false;
     }
 
     public boolean getCartaPrigione() {
@@ -139,6 +160,7 @@ public class Giocatore {
     public void VaiInPrigione(Prigione prigione) {
         this.posizione = prigione.getPosizione();
         this.StatoPrigione = true;
+        this.turniInPrigione = prigione.getTurniPrigione();
     }
 
     public boolean getSaltaCasellaMalus() {
