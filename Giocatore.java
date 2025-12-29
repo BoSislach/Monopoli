@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-class Giocatore {
+public class Giocatore {
     protected String nome;
     protected int posizione;
     protected int saldo;
@@ -16,9 +16,9 @@ class Giocatore {
     protected int contatoreSaltaTasse = 3;
     protected boolean VaiInPrigione = false;
     protected String simbolo;
+    
 
-    public Giocatore(String nome, int posizione, int saldo,
-                     ArrayList<Terreno> terreniPosseduti, boolean inGioco, String simbolo) {
+    public Giocatore(String nome, int posizione, int saldo, ArrayList<Terreno> terreniPosseduti, boolean inGioco, String simbolo) {
         this.nome = nome;
         this.posizione = posizione;
         this.saldo = saldo;
@@ -41,6 +41,11 @@ class Giocatore {
 
     public int getSaldo() {
         return saldo;
+    }
+
+    public boolean setIsInGioco(boolean stato) {
+        this.inGioco = stato;
+        return inGioco;
     }
 
     public void setSaldo(int saldo) {
