@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.Random;
-class Tabellone {
+public class Tabellone {
     protected int dimensione;
     protected char[][] monopoli;
     protected final int DIM = 10;
     protected Casella[][] matrice = new Casella[DIM][DIM];
+    
     public Tabellone(){
         dimensione = 10;
         monopoli = new char[dimensione][dimensione];
@@ -33,6 +34,10 @@ class Tabellone {
             matrice[i][0] = creaCasella(pos, i, 0);
             pos++;
         }
+    }
+
+    public Casella [][]getCasellaMatrice(){
+        return matrice;
     }
 
     private Casella creaCasella(int pos, int x, int y) {
@@ -72,8 +77,16 @@ class Tabellone {
         return matrice[0].length;
     }
     
-    public Casella getCasella(int x, int y) {
-        return matrice[x][y];
+    public Casella getCasella(int posizione) {
+        for (int i = 0; i < DIM; i++) {
+            for (int j = 0; j < DIM; j++) {
+                Casella casella = matrice[i][j];
+                if (casella != null && casella.getPosizione() == posizione) {
+                    return casella;
+                }
+            }
+        }
+        return null; 
     }
 
     public Prigione getCasellaPrigione() {
