@@ -16,7 +16,7 @@ enum Colore {
     }
 }
 
-class Casella {
+public class Casella {
     protected String nome;
     protected Casella precedente;
     protected Casella successiva;
