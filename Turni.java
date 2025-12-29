@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 
-class Turni {
+public class Turni {
     private final ArrayList<Giocatore> giocatori;
     private int turnoCorrente;
+
+
     public Turni(ArrayList<Giocatore> giocatori) {
         this.giocatori = new ArrayList<>(giocatori);
         this.turnoCorrente = 0;
