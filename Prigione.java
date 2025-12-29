@@ -1,5 +1,4 @@
-class Prigione extends Casella{
-    protected final boolean indicatorePrigione = true;
+public class Prigione extends Casella{
     protected boolean contatorePrigione = false;
     protected final int TurniPrigione = 3;
     protected final int CostoCauzione = 50;
@@ -8,10 +7,6 @@ class Prigione extends Casella{
 
     public Prigione(String nome, int posizione){
         super(nome, posizione);
-    }
-
-    public boolean getIndicatorePrigione(){
-        return indicatorePrigione;
     }
 
     public int getTurniPrigione(){
@@ -26,32 +21,28 @@ class Prigione extends Casella{
         return contatorePrigione;
     }
 
-    public void esciPrigione(){
-        setContatorePrigione(false);
-    }
 
-    public void setContatorePrigione(boolean stato){
-        contatorePrigione = stato;
-        contatorePosizioneGiocatore=0;
-    }
-
-    public void contaVoltePosizioneGiocatore(){
+    public boolean contaVoltePosizioneGiocatore(Giocatore g){
         contatorePosizioneGiocatore++;
-        if(contatorePosizioneGiocatore==3){
+        if(contatorePosizioneGiocatore >= TurniPrigione){
           contatorePosizioneGiocatore=0;
-          setContatorePrigione(false);
+          g.setStatoPrigione(false);
+          return false;
         }else{
-          setContatorePrigione(true);
+          g.setStatoPrigione(true);
+          return true;
         }
     }
 
     public boolean cauzione(Giocatore g){
         if(g.getSaldo() >= CostoCauzione){
             g.setSaldo(g.getSaldo() - CostoCauzione);
-            setContatorePrigione(false);
+            g.setStatoPrigione(false);
+            System.out.println("il giocatore ha pagato la cauzione");
             return false;
         }else{
-            setContatorePrigione(true);
+            g.setStatoPrigione(true);
+            System.out.println("il giocatore non ha soldi per pagarsi la cauzione");
             return true;
         }
 
