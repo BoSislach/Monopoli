@@ -1,4 +1,4 @@
-class Tassa extends Casella {
+public class Tassa extends Casella {
     private int importo;
 
     public Tassa(int importo, String nome ,int posizione) {
