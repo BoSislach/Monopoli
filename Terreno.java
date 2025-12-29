@@ -1,9 +1,10 @@
 import java.util.Scanner;
 
-class Terreno extends Casella {
+public class Terreno extends Casella {
     protected int costo;
     protected int affitto;
     protected boolean comprato;
+    protected Giocatore proprietario;
     protected final int Max_Case = 4;
     protected int numeroCaseInCasella = 0;
 
@@ -18,6 +19,14 @@ class Terreno extends Casella {
 
     public int getCosto() {
         return costo;
+    }
+
+    public Giocatore getProprietario() {
+        return proprietario;
+    }
+
+    public void setProprietario(Giocatore g) {
+        this.proprietario = g;
     }
 
     public int getAffitto() {
