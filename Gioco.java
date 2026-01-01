@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Gioco {
-
+    
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
         Tabellone tabellone = new Tabellone();
