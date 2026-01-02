@@ -45,27 +45,27 @@ public class Tabellone {
         Random rand2 = new Random();
         switch (pos) {
             case 0:
-                return new Partenza("PARTENZA", pos);
+                return new Partenza("PARTENZA");
             case 5:
-                return new Tassa(25,"TASSA",pos);
+                return new Tassa(25,"TASSA");
             case 10:
-                return new Prigione("PRIGIONE",pos);
+                return new Prigione("PRIGIONE");
             case 15:
-                return new Imprevisto("IMPREVISTO",pos);
+                return new Imprevisto("IMPREVISTO");
             case 20:
-                return new Tassa(50, "TASSA",pos);
+                return new Tassa(50, "TASSA");
             case 25:
-                return new Imprevisto("IMPREVISTO",pos);
+                return new Imprevisto("IMPREVISTO");
             case 30:
-                return new VaiinPrigione("VAIPRIGIONE",pos);
+                return new VaiinPrigione("VAIPRIGIONE");
             case 35: 
-                return new Tassa(50, "TASSA  ",pos);
+                return new Tassa(50, "TASSA  ");
             case 40:
-                return new Imprevisto("IMPREVISTO",pos);
+                return new Imprevisto("IMPREVISTO");
             default:
                 int costo = rand.nextInt(25, 100);
                 int affitto = rand2.nextInt(15, 50);
-                return new Terreno("terreno", pos, costo, affitto);
+                return new Terreno("terreno", costo, affitto);
         }
     }
 
@@ -75,18 +75,6 @@ public class Tabellone {
 
     public int getMatriceWidth() {
         return matrice[0].length;
-    }
-    
-    public Casella getCasella(int posizione) {
-        for (int i = 0; i < DIM; i++) {
-            for (int j = 0; j < DIM; j++) {
-                Casella casella = matrice[i][j];
-                if (casella != null && casella.getPosizione() == posizione) {
-                    return casella;
-                }
-            }
-        }
-        return null; 
     }
 
     public Prigione getCasellaPrigione() {
@@ -101,6 +89,52 @@ public class Tabellone {
         return null; 
     }
 
+    public Partenza getCasellaPartenza() {
+        for (int i = 0; i < DIM; i++) {
+            for (int j = 0; j < DIM; j++) {
+                Casella casella = matrice[i][j];
+                if (casella instanceof Partenza) {
+                    return (Partenza) casella;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Casella getProssimaCasella(Casella attuale) {
+        for (int i = 0; i < DIM; i++) {
+            for (int j = 0; j < DIM; j++) {
+                if (matrice[i][j] == attuale) {
+
+                    // destra
+                    if (i == DIM - 1 && j + 1 < DIM && matrice[i][j + 1] != null) {
+                        return matrice[i][j + 1];
+                    }
+
+                    // su
+                    if (j == DIM - 1 && i - 1 >= 0 && matrice[i - 1][j] != null) {
+                        return matrice[i - 1][j];
+                    }
+
+                    // sinistra
+                    if (i == 0 && j - 1 >= 0 && matrice[i][j - 1] != null) {
+                        return matrice[i][j - 1];
+                    }
+
+                    // giù
+                    if (j == 0 && i + 1 < DIM && matrice[i + 1][j] != null) {
+                        return matrice[i + 1][j];
+                    }
+
+                    return getCasellaPartenza();
+                }
+            }
+        }
+        return getCasellaPartenza();
+}
+
+
+
     public void stampaTabellone(ArrayList<Giocatore> giocatori) {
     int larghezza = 10;
     for (int i = 0; i < DIM; i++) {
@@ -110,7 +144,7 @@ public class Tabellone {
                 Colore colore = matrice[i][j].getColore();
                 String simboliGiocatori = "";
                 for (int c =0 ;c < giocatori.size();c++) {
-                    if (giocatori.get(c).getPosizione() == matrice[i][j].getPosizione()) {
+                    if (giocatori.get(c).getPosizione() == matrice[i][j]) {
                         simboliGiocatori += giocatori.get(c).getSimbolo();
                     }
                 }

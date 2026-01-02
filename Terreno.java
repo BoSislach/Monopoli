@@ -10,8 +10,8 @@ public class Terreno extends Casella {
 
     Scanner scanner = new Scanner(System.in);
 
-    public Terreno(String nome, int posizione, int costo, int affitto) {
-        super(nome, posizione);
+    public Terreno(String nome, int costo, int affitto) {
+        super(nome);
         this.costo = costo;
         this.affitto = affitto;
         this.comprato = false;

@@ -3,8 +3,8 @@ public class Prigione extends Casella{
     protected final int TurniPrigione = 3;
     protected final int CostoCauzione = 50;
 
-    public Prigione(String nome, int posizione){
-        super(nome, posizione);
+    public Prigione(String nome){
+        super(nome);
     }
 
     public int getTurniPrigione(){

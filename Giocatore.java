@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Giocatore {
     protected String nome;
-    protected int posizione;
+    protected Casella posizione;
     protected int saldo;
     protected boolean inGioco;
     protected ArrayList<Terreno> terreniPosseduti;
@@ -21,7 +21,7 @@ public class Giocatore {
     protected int turniInPrigione = 0;
 
 
-    public Giocatore(String nome, int posizione, int saldo, ArrayList<Terreno> terreniPosseduti, boolean inGioco, String simbolo) {
+    public Giocatore(String nome, Casella posizione, int saldo, ArrayList<Terreno> terreniPosseduti, boolean inGioco, String simbolo) {
         this.nome = nome;
         this.posizione = posizione;
         this.saldo = saldo;
@@ -34,11 +34,11 @@ public class Giocatore {
         return nome;
     }
 
-    public int getPosizione() {
+    public Casella getPosizione() {
         return posizione;
     }
 
-    public void setPosizione(int posizione) {
+    public void setPosizione(Casella posizione) {
         this.posizione = posizione;
     }
 
@@ -75,16 +75,17 @@ public class Giocatore {
         this.turno = turno;
     }
 
-    public void muovi() {
-        Dadi dadi = new Dadi();
-        dadi.lanciaDadi();
-        int somma = dadi.getSomma();
-        this.posizione += somma;
+    public void muovi(int passi, Tabellone t) {
+        Casella attuale = posizione;
+        for (int i = 0; i < passi; i++) {
+            attuale = t.getProssimaCasella(attuale);
+        }
+        posizione = attuale;
     }
+
 
     public void controlloSaltaCasellaMalus() {
         if (this.saltaCasellaMalus) {
-            this.posizione++;
             this.saltaCasellaMalus = false;
         }
     }
@@ -158,7 +159,7 @@ public class Giocatore {
     }
 
     public void VaiInPrigione(Prigione prigione) {
-        this.posizione = prigione.getPosizione();
+        this.posizione = prigione;
         this.StatoPrigione = true;
         this.turniInPrigione = prigione.getTurniPrigione();
     }

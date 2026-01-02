@@ -1,9 +1,8 @@
 class Partenza extends Casella {   
     protected String nome;
-    protected String posizione;
 
-    public Partenza(String nome,int posizione){
-        super(nome,posizione);
+    public Partenza(String nome){
+        super(nome);
     }
 
     public void PassaAlVia(Giocatore giocatore) {

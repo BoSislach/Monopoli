@@ -20,30 +20,41 @@ public class Casella {
     protected String nome;
     protected Casella precedente;
     protected Casella successiva;
-    protected int posizione;
     protected Colore colore;
 
     protected final Colore coloreBase = null;
 
     public static ArrayList<Colore> colori = new ArrayList<>(Arrays.asList(Colore.ROSSO, Colore.BLU,Colore.VERDE,Colore.GIALLO));
 
-    public Casella(String nome, int posizione) {
+    public Casella(String nome) {
         this.nome = nome;
-        this.posizione = posizione;
         this.colore = coloreBase;
+    }
+
+    public Casella getSuccessiva(){
+        return successiva;
+    }
+
+    public Casella getPrecedente(){
+        return precedente;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public int getPosizione() {
-        return posizione;
-    }
-
     public Colore getColore() {
         return colore;
     }
+
+    public void setSuccessiva(Casella successiva){
+        this.successiva = successiva;
+    }
+
+    public void setPrecedente(Casella precedente){
+        this.precedente = precedente;
+    }
+
     public void setColore(Colore color) {
         this.colore = color;
     }

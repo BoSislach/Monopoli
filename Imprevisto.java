@@ -1,8 +1,8 @@
 import java.util.Random;
 public class Imprevisto extends Casella{
 
-    public Imprevisto(String nomeCasella,int posizione){
-        super(nomeCasella, posizione);
+    public Imprevisto(String nomeCasella){
+        super(nomeCasella);
 
 
         
@@ -40,12 +40,9 @@ public class Imprevisto extends Casella{
     AvanzaDi5Posizioni("avanza di 5 posizioni"){
         @Override
         public void eseguiAzione(Giocatore giocatore, Tabellone t, Dadi dadi){
-            //aggiunta controllo se sei ai bordi DANIEL SOS!!!!!!?
-            if (giocatore.getPosizione() + 5 > 39) {
-                giocatore.setPosizione((giocatore.getPosizione() + 5) - 40);
-                giocatore.setSaldo(giocatore.getSaldo() + 200);
+            for(int i = 0; i < 5; i++){
+                giocatore.setPosizione(giocatore.getPosizione().getSuccessiva());
             }
-            giocatore.setPosizione(giocatore.getPosizione() + 5);
         }
     },
     Paga_tassa_imprevisto100("paga una tassa imprevisto di 100 $"){
@@ -81,7 +78,9 @@ public class Imprevisto extends Casella{
     VaiAllaPartenza("vai alla partenza"){
         @Override
         public void eseguiAzione(Giocatore giocatore, Tabellone t, Dadi dadi){
-            giocatore.setPosizione(0);
+            while(!(giocatore.getPosizione() instanceof Partenza)){
+                    giocatore.setPosizione(giocatore.getPosizione().getSuccessiva());
+            }
             giocatore.setSaldo(giocatore.getSaldo() + 200);
         }
     },
@@ -89,8 +88,9 @@ public class Imprevisto extends Casella{
     TornaIndietro3Posizioni("torna indietro di 3 posizioni"){
         @Override
         public void eseguiAzione(Giocatore giocatore, Tabellone t,Dadi dadi){
-            //FUNZIOE DELLO SPOSTAMENTO INDIETRO DANIEL SOS!!!!!!!
-            giocatore.setPosizione(giocatore.getPosizione() - 3);
+            for(int i = 0; i < 3; i++){
+                giocatore.setPosizione(giocatore.getPosizione().getPrecedente());
+            }
         }
     },
     ManutenzioneCasa25("paga una manutenzione di 25 $ per ogni casa posseduta"){
@@ -127,7 +127,7 @@ public class Imprevisto extends Casella{
     Avanza1Posizioni("avanza di 1 posizioni"){
         @Override
         public void eseguiAzione(Giocatore giocatore, Tabellone t,Dadi dadi){
-            giocatore.setPosizione(giocatore.getPosizione() + 1);
+            giocatore.setPosizione(giocatore.getPosizione().getSuccessiva());
         }
     },
 
