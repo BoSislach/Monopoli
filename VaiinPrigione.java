@@ -15,17 +15,14 @@ public class VaiinPrigione extends Casella{
                 System.out.println(giocatore.getNome() + " è andato in prigione");
                 contatoreGiocatoreVaiInPrigione = 0;
                 return true;
+
            }else{
+
             return false;
-           }
-       
-        
+        }       
     }
 
     public String toString(){
         return super.toString();
     }
-
-    
-
 }
