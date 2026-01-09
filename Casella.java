@@ -21,6 +21,7 @@ public class Casella {
     protected Casella precedente;
     protected Casella successiva;
     protected Colore colore;
+    protected boolean isComprabile = false;
 
     protected final Colore coloreBase = null;
 
@@ -69,7 +70,7 @@ public class Casella {
                 return Colore.BIANCO.ansi + nome + Colore.RESET;
             }
         }else{
-             return colore.ansi + " " + nome + " " + Colore.RESET;
+                return colore.ansi + " " + nome + " " + Colore.RESET;
         }
        
     }
