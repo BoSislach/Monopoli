@@ -1,8 +1,9 @@
-class Partenza extends Casella {   
+public class Partenza extends Casella {   
     protected String nome;
 
     public Partenza(String nome){
         super(nome);
+        
     }
 
     public void PassaAlVia(Giocatore giocatore) {
@@ -14,6 +15,4 @@ class Partenza extends Casella {
     public String toString() {
         return super.toString();   
     }
-    
-    
 }

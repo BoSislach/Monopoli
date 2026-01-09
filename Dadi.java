@@ -1,4 +1,4 @@
-class Dadi {
+public class Dadi {
     protected int dado1;
     protected int dado2;
 

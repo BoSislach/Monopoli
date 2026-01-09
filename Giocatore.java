@@ -34,6 +34,13 @@ public class Giocatore {
         return nome;
     }
 
+    public String getNomeColorato() {
+        if (coloreScelto != null) {
+            return coloreScelto.ansi + nome + Colore.RESET;
+        }
+        return nome;
+    }
+
     public Casella getPosizione() {
         return posizione;
     }
@@ -116,15 +123,10 @@ public class Giocatore {
         return coloreScelto;
     }
 
-
-
-    public void pagaAffitto(Terreno terreno) {
+    public int pagaAffitto(Terreno terreno) {
         int affitto = terreno.getAffitto();
         this.saldo -= affitto;
-        if (this.saldo < 0) {
-            this.inGioco = false;
-            System.out.println("Il giocatore " + this.nome + " è fuori");
-        }
+        return affitto;
     }
 
     public boolean getStatoPrigione() {
@@ -135,8 +137,8 @@ public class Giocatore {
         this.StatoPrigione = stato;
     }
 
-    public void setCartaPrigione() {
-        this.cartaEsciPrigione = false;
+    public void setCartaPrigione(boolean stato) {
+        this.cartaEsciPrigione = stato;
     }
 
     public boolean getCartaPrigione() {
@@ -152,10 +154,6 @@ public class Giocatore {
             this.StatoPrigione = true;
             return false;
         }
-    }
-
-    public void esciPrigione() {
-        setCartaPrigione();
     }
 
     public void VaiInPrigione(Prigione prigione) {
@@ -193,6 +191,10 @@ public class Giocatore {
 
     public void setCompraCase(boolean stato) {
         this.compraCase = stato;
+    }
+
+    public String toString(){
+        return nome;
     }
 
     public boolean getCompraCase() {
