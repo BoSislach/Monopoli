@@ -1,17 +1,20 @@
+
 import java.util.ArrayList;
 import java.util.Random;
+
 public class Tabellone {
+
     protected int dimensione;
     protected char[][] monopoli;
     protected final int DIM = 10;
     protected Casella[][] matrice = new Casella[DIM][DIM];
-    
-    public Tabellone(){
+
+    public Tabellone() {
         dimensione = 10;
         monopoli = new char[dimensione][dimensione];
         inizializzaTabellone();
     }
-    
+
     protected void inizializzaTabellone() {
         int pos = 0;
 
@@ -36,7 +39,7 @@ public class Tabellone {
         }
     }
 
-    public Casella [][]getCasellaMatrice(){
+    public Casella[][] getCasellaMatrice() {
         return matrice;
     }
 
@@ -47,7 +50,7 @@ public class Tabellone {
             case 0:
                 return new Partenza("PARTENZA");
             case 5:
-                return new Tassa(25,"TASSA");
+                return new Tassa(25, "TASSA");
             case 10:
                 return new Prigione("PRIGIONE");
             case 15:
@@ -58,7 +61,7 @@ public class Tabellone {
                 return new Imprevisto("IMPREVISTO");
             case 30:
                 return new VaiinPrigione("VAIPRIGIONE");
-            case 35: 
+            case 35:
                 return new Tassa(50, "TASSA  ");
             case 40:
                 return new Imprevisto("IMPREVISTO");
@@ -77,6 +80,10 @@ public class Tabellone {
         return matrice[0].length;
     }
 
+    public int getDimensione() {
+        return dimensione;
+    }
+
     public Prigione getCasellaPrigione() {
         for (int i = 0; i < DIM; i++) {
             for (int j = 0; j < DIM; j++) {
@@ -86,7 +93,7 @@ public class Tabellone {
                 }
             }
         }
-        return null; 
+        return null;
     }
 
     public Partenza getCasellaPartenza() {
@@ -131,55 +138,64 @@ public class Tabellone {
             }
         }
         return getCasellaPartenza();
-}
-
-
+    }
 
     public void stampaTabellone(ArrayList<Giocatore> giocatori) {
-    int larghezza = 10;
-    for (int i = 0; i < DIM; i++) {
-        for (int j = 0; j < DIM; j++) {
-            if (matrice[i][j] != null) {
-                String nomeCasella = centra(matrice[i][j].getNome(), larghezza);
-                Colore colore = matrice[i][j].getColore();
-                String simboliGiocatori = "";
-                for (int c =0 ;c < giocatori.size();c++) {
-                    if (giocatori.get(c).getPosizione() == matrice[i][j]) {
-                        simboliGiocatori += giocatori.get(c).getSimbolo();
+        int larghezza = 10;
+        for (int i = 0; i < DIM; i++) {
+            for (int j = 0; j < DIM; j++) {
+                if (matrice[i][j] != null) {
+                    String nomeCasella = matrice[i][j].getNome();
+                    Colore colore = matrice[i][j].getColore();
+                    String simboliGiocatori = "";
+
+                    for (Giocatore g : giocatori) {
+                        if (g.getPosizione() == matrice[i][j]) {
+                            if (g.getColoreScelto() != null) {
+                                simboliGiocatori += g.getColoreScelto().ansi + g.getSimbolo() + Colore.RESET;
+                            } else {
+                                simboliGiocatori += g.getSimbolo();
+                            }
+                        }
                     }
-                }
-                if (!simboliGiocatori.equals("")) {
-                    System.out.print("[" + centra(simboliGiocatori, larghezza) + "]");
-                } else {
-                    if (matrice[i][j] instanceof Terreno && colore != null) {
-                        System.out.print("[" + colore.ansi + nomeCasella + Colore.RESET + "]");
-                    } else if (!(matrice[i][j] instanceof Terreno)) {
-                        System.out.print("[" + Colore.BIANCO.ansi + nomeCasella + Colore.RESET + "]");
+
+                    if (!simboliGiocatori.equals("")) {
+
+                        System.out.print("[" + centra(simboliGiocatori, larghezza) + "]");
                     } else {
-                        System.out.print("[" + nomeCasella + "]");
+
+                        String contenutoCella = centra(nomeCasella, larghezza);
+
+                        if (matrice[i][j] instanceof Terreno && colore != null) {
+                            System.out.print("[" + colore.ansi + contenutoCella + Colore.RESET + "]");
+                        } else if (!(matrice[i][j] instanceof Terreno)) {
+                            System.out.print("[" + Colore.BIANCO.ansi + contenutoCella + Colore.RESET + "]");
+                        } else {
+                            System.out.print("[" + contenutoCella + "]");
+                        }
                     }
+                } else {
+                    System.out.print("[" + " ".repeat(larghezza) + "]");
                 }
-            } else {
-                System.out.print("[" + " ".repeat(larghezza) + "]");
             }
+            System.out.println();
         }
-        System.out.println();
-    }
-}
-
-
-
-private String centra(String testo, int larghezza) {
-    if (testo.length() >= larghezza) {
-        return testo.substring(0, larghezza);
     }
 
-    int spaziTotali = larghezza - testo.length();
-    int spaziSinistra = spaziTotali / 2;
-    int spaziDestra = spaziTotali - spaziSinistra;
+    private String centra(String testo, int larghezza) {
 
-    return " ".repeat(spaziSinistra) + testo + " ".repeat(spaziDestra);
-}
+        String testoSenzaAnsi = testo.replaceAll("\u001B\\[[;\\d]*m", "");
 
+        if (testoSenzaAnsi.length() >= larghezza) {
+
+            return testoSenzaAnsi.substring(0, larghezza);
+        }
+
+        int spaziTotali = larghezza - testoSenzaAnsi.length();
+        int spaziSinistra = spaziTotali / 2;
+        int spaziDestra = spaziTotali - spaziSinistra;
+
+        return " ".repeat(spaziSinistra) + testo + " ".repeat(spaziDestra);
+    }
 
 }
