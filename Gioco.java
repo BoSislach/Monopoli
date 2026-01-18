@@ -121,7 +121,7 @@ public class Gioco {
                         System.out.println(giocatoreCorrente.getNomeColorato() + " ha perso il gioco!");
                         giocatoreCorrente.setIsInGioco(false);
                         giocatori.remove(giocatoreCorrente);
-                        return;
+                        continue;
                     }
 
                     terreno.getProprietario().setSaldo(terreno.getProprietario().getSaldo() + sommaDaPagare);
@@ -157,7 +157,7 @@ public class Gioco {
                     System.out.println(giocatoreCorrente.getNomeColorato() + " ha perso il gioco!");
                     giocatoreCorrente.setIsInGioco(false);
                     giocatori.remove(giocatoreCorrente);
-                    return;
+                    continue;
 
                 } else {
                     tassa.azione(giocatoreCorrente);
