@@ -14,7 +14,7 @@ public class Gioco {
         do {
             System.out.print("Inserisci il numero di giocatori (1-4): ");
             numeroGiocatori = scanner.nextInt();
-        } while (numeroGiocatori < 1 || numeroGiocatori > 4);
+        } while (numeroGiocatori < 2 || numeroGiocatori > 4);
 
         for (int i = 0; i < numeroGiocatori; i++) {
             System.out.println("Inserisci il nome del giocatore " + (i + 1) + ":");
@@ -119,9 +119,10 @@ public class Gioco {
                     if (giocatoreCorrente.getSaldo() - sommaDaPagare < 0) {
                         System.out.print(giocatoreCorrente.getNomeColorato() + " deve pagare un affitto di " + sommaDaPagare + " ma non ha abbastanza soldi. ");
                         System.out.println(giocatoreCorrente.getNomeColorato() + " ha perso il gioco!");
+                        giocatoreCorrente.togliTerreniPosseduti();
                         giocatoreCorrente.setIsInGioco(false);
                         giocatori.remove(giocatoreCorrente);
-                        return;
+                        continue;
                     }
 
                     terreno.getProprietario().setSaldo(terreno.getProprietario().getSaldo() + sommaDaPagare);
@@ -136,6 +137,7 @@ public class Gioco {
                 for (int c = 0; c < giocatori.size(); c++) {
                     if (giocatori.get(c).isInGioco() == false) {
                         System.out.println(giocatori.get(c).getNomeColorato() + " e fuori dal gioco");
+                        giocatori.get(c).togliTerreniPosseduti();
                         giocatori.remove(c);
                     }
 
@@ -153,11 +155,21 @@ public class Gioco {
             } else if (casellaCorrente instanceof Tassa tassa) {
                 System.out.print("\n");
                 System.out.println(giocatoreCorrente.getNomeColorato() + " deve pagare una tassa di " + tassa.getImporto());
-                if (giocatoreCorrente.getSaldo() - tassa.getImporto() < 0) {
-                    System.out.println(giocatoreCorrente.getNomeColorato() + " ha perso il gioco!");
+                if(giocatoreCorrente.getSaltaTasse()) {
+                    System.out.println(giocatoreCorrente.getNomeColorato()+" vuoi usare la carta salta tasse? (s/n)");
+                    String risposta = scanner.next();
+                    if (risposta.equals("s")) {
+                    System.out.println(giocatoreCorrente.getNomeColorato() + " salta il pagamento della tassa di " + tassa.getImporto() + "$ grazie al turno extra!");
+                    giocatoreCorrente.setSaltaTasse(false);
+                    }else{
+                        System.out.println(giocatoreCorrente.getNomeColorato() + " non ha usato la carta salta tasse");
+                    }
+                    if (giocatoreCorrente.getSaldo() - tassa.getImporto() < 0) {
+                    System.out.println(giocatoreCorrente.getNomeColorato() + " non puo pagare la tassa, ha perso il gioco");
+                    giocatoreCorrente.togliTerreniPosseduti();
                     giocatoreCorrente.setIsInGioco(false);
                     giocatori.remove(giocatoreCorrente);
-                    return;
+                    continue;
 
                 } else {
                     tassa.azione(giocatoreCorrente);
@@ -175,5 +187,6 @@ public class Gioco {
             }
         }
     }
+}
 }
 

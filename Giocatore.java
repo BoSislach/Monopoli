@@ -11,7 +11,6 @@ public class Giocatore {
     protected boolean StatoPrigione = false;
     protected boolean compraCase = true;
     protected int counterTurni = 0;
-    protected boolean saltaCasellaMalus = false;
     protected boolean saltaTasse = false;
     protected int contatoreSaltaTasse = 3;
     protected boolean VaiInPrigione = false;
@@ -90,12 +89,12 @@ public class Giocatore {
         posizione = attuale;
     }
 
-
-    public void controlloSaltaCasellaMalus() {
-        if (this.saltaCasellaMalus) {
-            this.saltaCasellaMalus = false;
+    public void togliTerreniPosseduti(){
+        for(int c=0; c<terreniPosseduti.size(); c++){
+            terreniPosseduti.remove(c);
         }
     }
+
 
     public void setHaComprato(boolean stato){
         this.Hacomprato = stato;
@@ -162,27 +161,12 @@ public class Giocatore {
         this.turniInPrigione = prigione.getTurniPrigione();
     }
 
-    public boolean getSaltaCasellaMalus() {
-        return saltaCasellaMalus;
-    }
-
-    public void setCasellaMalus(boolean stato) {
-        this.saltaCasellaMalus = stato;
-    }
-
     public void setSaltaTasse(boolean stato) {
         this.saltaTasse = stato;
     }
-
-    public void ContatoreSaltaTasse() {
-        if (contatoreSaltaTasse > 0) {
-            contatoreSaltaTasse--;
-        } else {
-            contatoreSaltaTasse = 3;
-            setSaltaTasse(false);
-        }
+    public boolean getSaltaTasse() {
+        return saltaTasse;
     }
-    
 
     public void prestitoBanca(int importo, Banca b) {
         this.saldo += importo;
