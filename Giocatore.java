@@ -11,6 +11,7 @@ public class Giocatore {
     protected boolean StatoPrigione = false;
     protected boolean compraCase = true;
     protected int counterTurni = 0;
+    protected boolean saltaCasellaMalus = false;
     protected boolean saltaTasse = false;
     protected int contatoreSaltaTasse = 3;
     protected boolean VaiInPrigione = false;
@@ -19,8 +20,8 @@ public class Giocatore {
     protected Colore coloreScelto = null;
     protected int turniInPrigione = 0;
 
-
-    public Giocatore(String nome, Casella posizione, int saldo, ArrayList<Terreno> terreniPosseduti, boolean inGioco, String simbolo) {
+    public Giocatore(String nome, Casella posizione, int saldo, ArrayList<Terreno> terreniPosseduti, boolean inGioco,
+            String simbolo) {
         this.nome = nome;
         this.posizione = posizione;
         this.saldo = saldo;
@@ -69,7 +70,7 @@ public class Giocatore {
         this.counterTurni++;
     }
 
-    public String getSimbolo(){
+    public String getSimbolo() {
         return simbolo;
     }
 
@@ -89,18 +90,17 @@ public class Giocatore {
         posizione = attuale;
     }
 
-    public void togliTerreniPosseduti(){
-        for(int c=0; c<terreniPosseduti.size(); c++){
-            terreniPosseduti.remove(c);
+    public void controlloSaltaCasellaMalus() {
+        if (this.saltaCasellaMalus) {
+            this.saltaCasellaMalus = false;
         }
     }
 
-
-    public void setHaComprato(boolean stato){
+    public void setHaComprato(boolean stato) {
         this.Hacomprato = stato;
     }
 
-    public boolean getHaComprato(){
+    public boolean getHaComprato() {
         return Hacomprato;
     }
 
@@ -114,11 +114,11 @@ public class Giocatore {
         }
     }
 
-    public void setColoreScelto(Colore posizione){
+    public void setColoreScelto(Colore posizione) {
         coloreScelto = posizione;
     }
 
-    public Colore getColoreScelto(){
+    public Colore getColoreScelto() {
         return coloreScelto;
     }
 
@@ -161,11 +161,25 @@ public class Giocatore {
         this.turniInPrigione = prigione.getTurniPrigione();
     }
 
+    public boolean getSaltaCasellaMalus() {
+        return saltaCasellaMalus;
+    }
+
+    public void setCasellaMalus(boolean stato) {
+        this.saltaCasellaMalus = stato;
+    }
+
     public void setSaltaTasse(boolean stato) {
         this.saltaTasse = stato;
     }
-    public boolean getSaltaTasse() {
-        return saltaTasse;
+
+    public void ContatoreSaltaTasse() {
+        if (contatoreSaltaTasse > 0) {
+            contatoreSaltaTasse--;
+        } else {
+            contatoreSaltaTasse = 3;
+            setSaltaTasse(false);
+        }
     }
 
     public void prestitoBanca(int importo, Banca b) {
@@ -177,7 +191,7 @@ public class Giocatore {
         this.compraCase = stato;
     }
 
-    public String toString(){
+    public String toString() {
         return nome;
     }
 

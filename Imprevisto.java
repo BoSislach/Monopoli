@@ -1,11 +1,8 @@
-
 import java.util.Random;
 
 public class Imprevisto extends Casella {
-
     public Imprevisto(String nomeCasella) {
         super(nomeCasella);
-
     }
 
     public void esegui(Giocatore giocatore, Tabellone t, Dadi dadi) {
@@ -15,7 +12,6 @@ public class Imprevisto extends Casella {
     }
 
     public enum AzioneImprevisto {
-
         BONUS("hai ricevuto un bonus di 100 $") {
             @Override
             public void eseguiAzione(Giocatore giocatore, Tabellone t, Dadi dadi) {
@@ -79,7 +75,6 @@ public class Imprevisto extends Casella {
                 } else {
                     System.out.println("Sei già alla partenza, non ricevi i 200 $");
                 }
-
             }
         },
         TornaIndietro3Posizioni("torna indietro di 3 posizioni") {
@@ -141,17 +136,6 @@ public class Imprevisto extends Casella {
                 int posizioneCasuale = rand.nextInt(0, t.getDimensione() + 1);
                 giocatore.muovi(posizioneCasuale, t);
             }
-        },
-        CartaSaltaTasse("hai ottenuto una carta salta tasse") {
-            public void eseguiAzione(Giocatore giocatore, Tabellone t, Dadi dadi) {
-                if(giocatore.getSaltaTasse()){
-                    System.out.println("hai già una carta salta tasse");
-                }else{
-                    giocatore.setSaltaTasse(true);
-                }
-                
-            }
-
         };
 
         private final String descrizioneAzione;
@@ -165,7 +149,6 @@ public class Imprevisto extends Casella {
         }
 
         public abstract void eseguiAzione(Giocatore giocatore, Tabellone t, Dadi dadi);
-
     }
 
     public AzioneImprevisto getAzioneCasuale() {
@@ -174,5 +157,4 @@ public class Imprevisto extends Casella {
         int indiceCasuale = rand.nextInt(0, azioni.length);
         return azioni[indiceCasuale];
     }
-
 }
