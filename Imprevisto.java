@@ -136,6 +136,16 @@ public class Imprevisto extends Casella {
                 int posizioneCasuale = rand.nextInt(0, t.getDimensione() + 1);
                 giocatore.muovi(posizioneCasuale, t);
             }
+        },
+        CartaSaltaTasse("hai ottenuto una carta salta tasse") {
+            public void eseguiAzione(Giocatore giocatore, Tabellone t, Dadi dadi) {
+                if(giocatore.getSaltaTasse()){
+                    System.out.println("hai già una carta salta tasse");
+                }else{
+                    giocatore.setSaltaTasse(true);
+                }
+                
+            }
         };
 
         private final String descrizioneAzione;

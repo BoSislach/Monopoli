@@ -20,8 +20,7 @@ public class Giocatore {
     protected Colore coloreScelto = null;
     protected int turniInPrigione = 0;
 
-    public Giocatore(String nome, Casella posizione, int saldo, ArrayList<Terreno> terreniPosseduti, boolean inGioco,
-            String simbolo) {
+    public Giocatore(String nome, Casella posizione, int saldo, ArrayList<Terreno> terreniPosseduti, boolean inGioco,String simbolo) {
         this.nome = nome;
         this.posizione = posizione;
         this.saldo = saldo;
@@ -161,9 +160,10 @@ public class Giocatore {
         this.turniInPrigione = prigione.getTurniPrigione();
     }
 
-    public boolean getSaltaCasellaMalus() {
-        return saltaCasellaMalus;
+    public boolean getSaltaTasse() {
+        return saltaTasse;
     }
+    
 
     public void setCasellaMalus(boolean stato) {
         this.saltaCasellaMalus = stato;
@@ -171,15 +171,6 @@ public class Giocatore {
 
     public void setSaltaTasse(boolean stato) {
         this.saltaTasse = stato;
-    }
-
-    public void ContatoreSaltaTasse() {
-        if (contatoreSaltaTasse > 0) {
-            contatoreSaltaTasse--;
-        } else {
-            contatoreSaltaTasse = 3;
-            setSaltaTasse(false);
-        }
     }
 
     public void prestitoBanca(int importo, Banca b) {
@@ -198,4 +189,18 @@ public class Giocatore {
     public boolean getCompraCase() {
         return compraCase;
     }
+
+    public void tolgoTerreni() {
+    for (Terreno t : terreniPosseduti) {
+        t.setProprietario(null);
+        t.comprato = false;
+        t.numeroCaseInCasella = 0;
+
+        if (t.getColore() != null) {
+            Casella.colori.add(t.getColore());
+            t.setColore(null);
+        }
+    }
+    terreniPosseduti.clear();
+}
 }

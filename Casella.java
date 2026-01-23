@@ -23,8 +23,7 @@ public class Casella {
     protected Colore colore;
     protected boolean isComprabile = false;
     protected final Colore coloreBase = null;
-    public static ArrayList<Colore> colori = new ArrayList<>(
-    Arrays.asList(Colore.ROSSO, Colore.BLU, Colore.VERDE, Colore.GIALLO));
+    public static ArrayList<Colore> colori = new ArrayList<>(Arrays.asList(Colore.ROSSO, Colore.BLU, Colore.VERDE, Colore.GIALLO));
 
     public Casella(String nome) {
         this.nome = nome;

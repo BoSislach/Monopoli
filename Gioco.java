@@ -82,7 +82,6 @@ public class Gioco {
                         if (!giocatoreCorrente.getCompraCase()) {
                             System.out.println(giocatoreCorrente.getNomeColorato() + " non puo comprare le case");
                             giocatoreCorrente.setCompraCase(true);
-                            continue;
                         } else {
                             System.out.println(
                                     "Vuoi acquistare " + terreno.getNome() + " per " + terreno.getCosto() + "? (s/n)");
@@ -95,8 +94,7 @@ public class Gioco {
                             }
                         }
                     } else {
-                        System.out.println(giocatoreCorrente.getNomeColorato()
-                                + " non ha abbastanza soldi per acquistare " + terreno.getNome());
+                        System.out.println(giocatoreCorrente.getNomeColorato()+ " non ha abbastanza soldi per acquistare " + terreno.getNome());
                     }
                 } else if (!terreno.getProprietario().equals(giocatoreCorrente)) {
                     System.out.print("\n");
@@ -104,10 +102,9 @@ public class Gioco {
                             terreno.getNome() + " è di proprietà di " + terreno.getProprietario().getNomeColorato());
                     int sommaDaPagare = giocatoreCorrente.pagaAffitto(terreno);
                     if (giocatoreCorrente.getSaldo() - sommaDaPagare < 0) {
-                        System.out.print(giocatoreCorrente.getNomeColorato() + " deve pagare un affitto di "
-                                + sommaDaPagare + " ma non ha abbastanza soldi. ");
+                        System.out.print(giocatoreCorrente.getNomeColorato() + " deve pagare un affitto di "+ sommaDaPagare + " ma non ha abbastanza soldi. ");
                         System.out.println(giocatoreCorrente.getNomeColorato() + " ha perso il gioco!");
-                        giocatoreCorrente.setIsInGioco(false);
+                        giocatoreCorrente.tolgoTerreni();  
                         giocatori.remove(giocatoreCorrente);
                         continue;
                     }
@@ -125,21 +122,22 @@ public class Gioco {
                     }
                 }
             } else if (casellaCorrente instanceof VaiinPrigione vai) {
-                boolean controlloPrigione = vai.VaiInGalera(giocatoreCorrente);
-                if (controlloPrigione) {
-                    System.out.println("vuoi pagare la cauzione? (s/n)");
-                    String risposta = scanner.next();
-                    if (risposta.equals("s")) {
-                        tabellone.getCasellaPrigione().cauzione(giocatoreCorrente);
-                    }
+                Prigione prigione = tabellone.getCasellaPrigione();
+                giocatoreCorrente.VaiInPrigione(prigione);
+                System.out.println(giocatoreCorrente.getNomeColorato() + " è stato mandato in prigione!");
+
+                System.out.println("Vuoi pagare la cauzione per uscire subito? (s/n)");
+                String risposta = scanner.next();
+                if (risposta.equals("s")) {
+                    prigione.cauzione(giocatoreCorrente);
                 }
             } else if (casellaCorrente instanceof Tassa tassa) {
                 System.out.print("\n");
                 System.out.println(
-                        giocatoreCorrente.getNomeColorato() + " deve pagare una tassa di " + tassa.getImporto());
+                giocatoreCorrente.getNomeColorato() + " deve pagare una tassa di " + tassa.getImporto());
                 if (giocatoreCorrente.getSaldo() - tassa.getImporto() < 0) {
                     System.out.println(giocatoreCorrente.getNomeColorato() + " ha perso il gioco!");
-                    giocatoreCorrente.setIsInGioco(false);
+                    giocatoreCorrente.tolgoTerreni(); 
                     giocatori.remove(giocatoreCorrente);
                     continue;
                 } else {
