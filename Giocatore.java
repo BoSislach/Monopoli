@@ -20,7 +20,8 @@ public class Giocatore {
     protected Colore coloreScelto = null;
     protected int turniInPrigione = 0;
 
-    public Giocatore(String nome, Casella posizione, int saldo, ArrayList<Terreno> terreniPosseduti, boolean inGioco,String simbolo) {
+    public Giocatore(String nome, Casella posizione, int saldo, ArrayList<Terreno> terreniPosseduti, boolean inGioco,
+            String simbolo) {
         this.nome = nome;
         this.posizione = posizione;
         this.saldo = saldo;
@@ -163,7 +164,6 @@ public class Giocatore {
     public boolean getSaltaTasse() {
         return saltaTasse;
     }
-    
 
     public void setCasellaMalus(boolean stato) {
         this.saltaCasellaMalus = stato;
@@ -190,17 +190,22 @@ public class Giocatore {
         return compraCase;
     }
 
-    public void tolgoTerreni() {
-    for (Terreno t : terreniPosseduti) {
-        t.setProprietario(null);
-        t.comprato = false;
-        t.numeroCaseInCasella = 0;
-
-        if (t.getColore() != null) {
-            Casella.colori.add(t.getColore());
-            t.setColore(null);
-        }
+    public boolean setInGioco(boolean stato) {
+        this.inGioco = stato;
+        return inGioco;
     }
-    terreniPosseduti.clear();
-}
+
+    public void tolgoTerreni() {
+        for (Terreno t : terreniPosseduti) {
+            t.setProprietario(null);
+            t.comprato = false;
+            t.numeroCaseInCasella = 0;
+
+            if (t.getColore() != null) {
+                Casella.colori.add(t.getColore());
+                t.setColore(null);
+            }
+        }
+        terreniPosseduti.clear();
+    }
 }
